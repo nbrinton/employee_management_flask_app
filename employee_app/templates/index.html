@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block body %}
+	<div class="jumbotron">
+	{% if session.logged_in %}
+	<h1 class="display-4">Employees</h1>
+	<ul class="list-group">
+		{% if not employees %}
+			<li><em>You haven't entered any employees yet</em></li>
+			<a class="btn btn-primary" href="{{ url_for('add') }}" role="button">Add Employee</a>
+		{% else %}
+			{% for employee in employees %}
+			<li class="list-group-item d-flex justify-content-between align-items-center">
+				<span class="btn-group">
+					<a class="btn btn-primary" href="employee/{{ employee.employee_id }}">
+						{{ employee.lname }}, {{ employee.fname }} {{ employee.minit }}.
+						{% set cost = 1000 %}
+						{% if employee.fname[0:1].upper() == 'A' %}
+							{% set cost = cost * 0.9 %}
+						{% endif %}
+						{% set dep_not_A = employee.dependents - employee.dependentsA %}
+						{% set cost = cost + (500 * dep_not_A) %}
+						{% set cost = cost + ((500 * employee.dependentsA) * 0.9) %}
+					</a>
+				<a class="btn btn-primary" href="/edit/{{ employee.employee_id }}" role="button">Edit</a>
+				<a class="btn btn-primary" href="/delete/{{ employee.employee_id }}" role="button">Delete</a>
+				</span>
+				<h2><span class="badge badge-primary badge-pill">$ {{ '{:20,.2f}'.format(cost) }}</span></h2>
+			</li>
+			
+			{% endfor %}
+		{% endif %}
+	</ul>
+	{% else %}
+	<h1 class="display-4">Welcome</h1>
+	<p class="lead">
+Welcome to the Employee Manager! To get started, login and add or edit some employees or register with us today!
+	</p>
+	<hr class="my-4">
+	<div class="text-center">
+		<a class="btn btn-primary btn-lg" href="/register" role="button">Register Today</a>
+		<a class="btn btn-primary btn-lg" href="/login" role="button">Login</a>
+	</div>
+	{% endif %}
+</div>
+{% endblock %}

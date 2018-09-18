@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block body %}
+	{% if session.logged_in %}
+	<div class="container">
+	<h1>Add</h1>
+	{% if error %}
+		<div class="alert alert-danger">
+		{{ error }}
+		</div>
+	{% endif %}
+		{% from "_formhelpers.html" import render_field %}
+		<form method="POST" action="{{ url_for('add') }}">
+	 	   	{{ form.csrf_token }}
+			{{ render_field(form.employee_id, class_="form-control") }}
+			{{ render_field(form.fname, class_="form-control") }}
+			{{ render_field(form.minit, class_="form-control") }}
+			{{ render_field(form.lname, class_="form-control") }}
+			{{ render_field(form.email, class_="form-control") }}
+			{{ render_field(form.salary, class_="form-control") }}
+			{{ render_field(form.dependents, class_="form-control") }}
+			{{ render_field(form.dependentsA, class_="form-control") }}
+			<div class="text-center">
+				<button type="submit" class="btn btn-primary">Add</button>
+				<a class="btn btn-primary" href="{{ url_for('index') }}" role="button">Cancel</a>
+			</div>
+		</form>
+	</div>
+	{% endif %}
+{% endblock %}

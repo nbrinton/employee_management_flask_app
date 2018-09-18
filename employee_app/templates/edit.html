@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block body %}
+	{% if session.logged_in %}
+		{% set employee = rv %}
+	<div class="form-group container">
+		<h1>Edit</h1>
+		<form action="/edit_employee/{{ employee.id }}" method="POST">
+		  <dl>
+			<dt>Company ID: {{ employee.company_id }}</dt>
+			<dt>Employee ID: {{ employee.employee_id }}</dt>
+			<dd><input type=text class="form-control" value="{{ employee.employee_id }}" size=30 name=employee_id></dd>
+			<dt>First Name: {{ employee.fname }}</dt>
+			<dd><input type=text class="form-control" value="{{ employee.fname }}" size=30 name=fname></dd>
+			<dt>Middle Initial: {{ employee.minit }}</dt>
+			<dd><input type=text class="form-control" value="{{ employee.minit }}" size=5 name=minit></dd>
+			<dt>Last Name: {{ employee.lname }}</dt>
+			<dd><input type=text class="form-control" value="{{ employee.lname }}" size=30 name=lname></dd>
+			<dt>Email: {{ employee.email }}</dt>
+			<dd><input type=email class="form-control" value="{{ employee.email }}" size=30 name=email></dd>
+			<dt>Salary: {{ '{:20,.2f}'.format(employee.salary) }}</dt>
+			<dd><input type=text class="form-control" value="{{ employee.salary }}" size=30 name=salary></dd>
+			<dt>Number of Dependents: {{ employee.dependents }}</dt>
+			<dd><input type=text class="form-control" value="{{ employee.dependents }}" size=5 name=dependents></dd>
+			<dt>Number of Dependents Whose Names Start with the Letter A: {{ employee.dependentsA }}</dt>
+			<dd><input type=text class="form-control" value="{{ employee.dependentsA }}" size=5 name=dependentsA></dd>
+			<div class="text-center">
+				<button type="submit" class="btn btn-primary">Save</button>
+				<a class="btn btn-primary" href="{{ url_for('index') }}" role="button">Cancel</a>
+			</div>
+		  </dl>
+		</form>
+	</div>
+	{% endif %}
+{% endblock %}

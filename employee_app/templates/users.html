@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block body %}
+	{% if session.logged_in %}
+		<h1>Users</h1>
+		{% set users = rv %}
+		{% for user in users %}
+			<dl>
+				<dt>
+					<h2>
+						ID&emsp;Email&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Password&emsp;&emsp;&emsp;&emsp;&emsp;Company ID
+					</h2>
+				</dt>
+
+				<dt>
+					<h2>
+						{{ user.id }}&emsp;&emsp;{{ user.email}}&emsp;&emsp;{{ user.password }}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{ user.company_id }}
+					</h2>
+				</dt>
+			</dl>
+		{% endfor %}
+	{% endif %}
+{% endblock %}

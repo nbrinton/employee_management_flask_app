@@ -1,0 +1,3 @@
+graft employee_app/templates
+graft employee_app/static
+include employee_app/schema.sql

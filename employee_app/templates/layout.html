@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		
+		<title>Employee Manager</title>
+
+	</head>
+
+	<body onload="clear_messages()" >
+		<div>
+			<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+				<a class="navbar-brand" href="/">Employee Manager</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+	
+				<div class="navbar-collapse" id="navbarSupportedContent">
+{#
+This was causing issues. When you'd make the screen small it would only show a hamburger icon that you can't even click
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+#}
+					<ul class="navbar-nav mr-auto">
+						{% if request.path == "/" %}
+						<li class="nav-item active">
+						{% else %}
+						<li class="nav-item">
+						{% endif %}
+							<a href="/" class="nav-link">Home</a>
+						</li>
+				  		{% if session.logged_in %}
+{#
+							{% if request.path == "/users" %}
+							<li class="nave-item active">
+							{% else %}
+							<li class="nav-item">
+							{% endif %}	
+								<a href="/users" class="nav-link">Users</a>
+							</li>
+#}
+							{% if request.path == "/add" %}
+							<li class="nav-item active">
+							{% else %}
+							<li class="nav-item">
+							{% endif %}
+							<a href="{{ url_for('add') }}" class="nav-link">Add Employee</a>
+							</li>
+						{% endif %}
+				
+						{% if request.path == "/login" %}
+							<li class="nav-item active">
+							{% else %}
+							<li class="nav-item">
+						{% endif %}
+							{% if not session.logged_in %}
+								<a href="{{ url_for('login') }}" class="nav-link">Login</a>
+							{% else %}
+								<a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+							{% endif %}
+							</li>
+		
+						{% if not session.logged_in %}
+							{% if request.path == "/register" %}
+							<li class="nav-item active">
+							{% else %}
+							<li class="nav-item">
+							{% endif %}
+								<a href="{{ url_for('register') }}" class="nav-link">Register</a>
+							</li>
+						{% endif %}
+					</ul>
+					{% if session.get('logged_in') == True %}
+					<span class="navbar-text">
+					Welcome {{ session.get('name') }}
+					</span>
+					{% endif %}
+				</div>
+			</nav>
+  
+			{# Message printing #}
+			{% for message in get_flashed_messages() %}
+				<div id="message_div" class="alert alert-success">{{ message }}</div>
+			{% endfor %}
+
+			{# Main page body #}
+			{% block body %}{% endblock %}
+		</div>
+
+		{# Put the Javascript file at the bottom of the body so it loads faster #}
+		<script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script>
+	</body>
+</html>
